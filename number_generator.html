@@ -1,0 +1,49 @@
+<p id='demo' style="font-size: 20px;">Click Button</p>
+<input type="text" id="text" placeholder="Enter digit count" >
+<input type="button" id="change" value="change" onclick="num()">
+<script>
+	
+	function makeDigit(number){
+		return new Array(number).fill(0).join('');
+	}
+	function changeDigit(digit,number){
+        let count = digit.split('')
+        count.splice(0,1,number)
+        return Number(count.join(''))
+	}
+	const number = new Array;
+	const myPunctuation = ['~!@#$%^&*'].toString().split('')
+	function numberAnimate(value){
+		let digit = Number(document.getElementById('text').value)
+	    let element = document.getElementById('demo');
+	    number.push(value);
+	    let lastNumber = number.pop();
+	    let splitNumber = lastNumber.toString().split('')
+
+        //animation function
+        const animate = (digit,value) => {
+        	var i = 0;
+        	let stringValue = value.toString().split('') 
+        	let digitLength = new Array(digit.length)
+        	let animating = setInterval(()=>{
+        		for(let int =0;int<digit.length;int++){
+        			digitLength.fill(myPunctuation[Math.floor(Math.random() * 10)],digit.length-1)
+        			console.log(value)
+        		}
+                element.innerHTML = digitLength.fill(stringValue[i],i,i+1).join('')
+                i++
+                if(i == digit.length){
+                    clearInterval(animating)
+                }
+        	},100)
+        }
+	    animate(makeDigit(digit),value)
+    }
+	function num(){
+		let digit = Number(document.getElementById('text').value)
+		let max = changeDigit(makeDigit(digit),9);
+        let min = changeDigit(makeDigit(digit),1);
+		let integer = Math.floor(Math.random() * max ) + min;
+        numberAnimate(integer);
+	}
+</script>
